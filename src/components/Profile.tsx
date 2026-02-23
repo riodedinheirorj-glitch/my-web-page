@@ -36,7 +36,7 @@ const Profile = ({ onNavigate }: ProfileProps) => {
     { icon: User, label: 'Dados Pessoais', sub: 'Nome, CPF e Telefone', color: 'text-blue-500', bg: 'bg-blue-50', screen: 'personal-data' },
     { icon: Bell, label: 'Notificações', sub: 'Alertas e avisos', color: 'text-orange-500', bg: 'bg-orange-50', screen: 'notifications' },
     { icon: Shield, label: 'Segurança', sub: 'Senha e biometria', color: 'text-green-500', bg: 'bg-green-50', screen: 'security' },
-    { icon: Settings, label: 'Preferências', sub: 'Mapa e navegação', color: 'text-purple-500', bg: 'bg-purple-50' },
+    { icon: Settings, label: 'Preferências', sub: 'Mapa e navegação', color: 'text-purple-500', bg: 'bg-purple-50', screen: 'preferences' },
     { icon: HelpCircle, label: 'Ajuda e Suporte', sub: 'FAQ e contato', color: 'text-gray-500', bg: 'bg-gray-50' },
   ];
 

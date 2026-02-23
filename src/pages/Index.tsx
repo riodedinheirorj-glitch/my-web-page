@@ -8,6 +8,7 @@ import OptimizationResult from "@/components/OptimizationResult";
 import OptimizationLoading from "@/components/OptimizationLoading";
 import LocationAdjustment from "@/components/LocationAdjustment";
 import Profile from "@/components/Profile";
+import Preferences from "@/components/Preferences";
 import PersonalData from "@/components/PersonalData";
 import Security from "@/components/Security";
 import Subscription from "@/components/Subscription";
@@ -23,7 +24,7 @@ export type ImportedData = {
   fixedCeps: number;
 };
 
-type Screen = "dashboard" | "route" | "import" | "result" | "loading" | "adjustment" | "profile" | "personal-data" | "security" | "subscription" | "notifications";
+type Screen = "dashboard" | "route" | "import" | "result" | "loading" | "adjustment" | "profile" | "personal-data" | "security" | "subscription" | "notifications" | "preferences";
 
 const Index = () => {
   const navigateTo = useNavigate();
@@ -83,6 +84,8 @@ const Index = () => {
         return <Subscription onNavigate={navigate} />;
       case "notifications":
         return <Notifications onNavigate={navigate} />;
+      case "preferences":
+        return <Preferences onNavigate={navigate} />;
       default:
         return <Dashboard onNavigate={navigate} />;
     }
