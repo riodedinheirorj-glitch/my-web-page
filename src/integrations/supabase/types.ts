@@ -17,55 +17,58 @@ export type Database = {
       credit_purchases: {
         Row: {
           amount: number
-          created_at: string | null
+          approved_at: string | null
+          approved_by: string | null
+          created_at: string
+          credits: number
+          gateway: string | null
+          gateway_charge_id: string | null
           id: string
-          payment_id: string | null
-          price: number
           status: string
-          updated_at: string | null
           user_id: string
         }
         Insert: {
           amount: number
-          created_at?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          credits: number
+          gateway?: string | null
+          gateway_charge_id?: string | null
           id?: string
-          payment_id?: string | null
-          price: number
           status?: string
-          updated_at?: string | null
           user_id: string
         }
         Update: {
           amount?: number
-          created_at?: string | null
+          approved_at?: string | null
+          approved_by?: string | null
+          created_at?: string
+          credits?: number
+          gateway?: string | null
+          gateway_charge_id?: string | null
           id?: string
-          payment_id?: string | null
-          price?: number
           status?: string
-          updated_at?: string | null
           user_id?: string
         }
         Relationships: []
       }
       downloads: {
         Row: {
-          created_at: string | null
+          downloaded_at: string
           file_name: string
-          file_type: string | null
           id: string
           user_id: string
         }
         Insert: {
-          created_at?: string | null
+          downloaded_at?: string
           file_name: string
-          file_type?: string | null
           id?: string
           user_id: string
         }
         Update: {
-          created_at?: string | null
+          downloaded_at?: string
           file_name?: string
-          file_type?: string | null
           id?: string
           user_id?: string
         }
@@ -73,20 +76,20 @@ export type Database = {
       }
       profiles: {
         Row: {
-          created_at: string | null
-          email: string | null
+          created_at: string
+          email: string
           full_name: string | null
           id: string
         }
         Insert: {
-          created_at?: string | null
-          email?: string | null
+          created_at?: string
+          email: string
           full_name?: string | null
           id: string
         }
         Update: {
-          created_at?: string | null
-          email?: string | null
+          created_at?: string
+          email?: string
           full_name?: string | null
           id?: string
         }
@@ -94,27 +97,24 @@ export type Database = {
       }
       transactions: {
         Row: {
-          admin_id: string | null
           amount: number
-          created_at: string | null
+          created_at: string
           description: string | null
           id: string
           type: string
           user_id: string
         }
         Insert: {
-          admin_id?: string | null
           amount: number
-          created_at?: string | null
+          created_at?: string
           description?: string | null
           id?: string
           type: string
           user_id: string
         }
         Update: {
-          admin_id?: string | null
           amount?: number
-          created_at?: string | null
+          created_at?: string
           description?: string | null
           id?: string
           type?: string
@@ -124,43 +124,43 @@ export type Database = {
       }
       user_credits: {
         Row: {
-          created_at: string | null
+          created_at: string
           credits: number
           id: string
-          updated_at: string | null
+          updated_at: string
           user_id: string
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
           credits?: number
           id?: string
-          updated_at?: string | null
+          updated_at?: string
           user_id: string
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
           credits?: number
           id?: string
-          updated_at?: string | null
+          updated_at?: string
           user_id?: string
         }
         Relationships: []
       }
       user_roles: {
         Row: {
-          created_at: string | null
+          created_at: string
           id: string
           role: Database["public"]["Enums"]["app_role"]
           user_id: string
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
           id?: string
-          role?: Database["public"]["Enums"]["app_role"]
+          role: Database["public"]["Enums"]["app_role"]
           user_id: string
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
@@ -172,12 +172,20 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      add_credits: {
+        Args: { _credits: number; _user_id: string }
+        Returns: undefined
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
           _user_id: string
         }
         Returns: boolean
+      }
+      process_download: {
+        Args: { _file_name: string; _user_id: string }
+        Returns: Json
       }
     }
     Enums: {
