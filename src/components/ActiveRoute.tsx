@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, Package, Phone, CheckCircle, XCircle, Loader2 } from "lucide-react";
+import { ChevronLeft, Package, Phone, CheckCircle, XCircle, Loader2, Navigation } from "lucide-react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ImportedData } from "@/pages/Index";
+import { getPreferredNavApp, openExternalNavigation } from "@/lib/external-navigation";
 
 // Mapbox public token
 mapboxgl.accessToken = "pk.eyJ1IjoicGFpdmEwMDciLCJhIjoiY21pYm4yOHphMDNocTJqb2w5OTlhZWk5bCJ9.nYQcx0AWey8p5P2R1mWJQQ";
@@ -20,6 +21,7 @@ const ActiveRoute = ({ onNavigate, importedData }: ActiveRouteProps) => {
   
   const [currentIndex, setCurrentIndex] = useState(0);
   const [driverCoords, setDriverCoords] = useState<[number, number] | null>(null);
+  const navApp = getPreferredNavApp();
 
   // 1. Extração de dados reais da sua planilha (conforme a imagem)
   const currentRow = importedData?.rows[currentIndex];
@@ -94,9 +96,26 @@ const ActiveRoute = ({ onNavigate, importedData }: ActiveRouteProps) => {
 
   const handleNext = () => {
     if (currentIndex < total - 1) {
-      setCurrentIndex(prev => prev + 1);
+      const nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+
+      // Auto-open external nav for next stop
+      const nextRow = importedData?.rows[nextIndex];
+      if (nextRow && navApp !== 'app') {
+        const lat = parseFloat(String(nextRow["Latitude"]).replace(',', '.'));
+        const lng = parseFloat(String(nextRow["Longitude"]).replace(',', '.'));
+        if (!isNaN(lat) && !isNaN(lng)) {
+          openExternalNavigation(lat, lng);
+        }
+      }
     } else {
       onNavigate("dashboard");
+    }
+  };
+
+  const handleOpenNav = () => {
+    if (destLat && destLng) {
+      openExternalNavigation(destLat, destLng);
     }
   };
 
@@ -138,6 +157,18 @@ const ActiveRoute = ({ onNavigate, importedData }: ActiveRouteProps) => {
             <span className="text-xs font-semibold text-primary">{Math.round(percent)}%</span>
           </div>
         </div>
+
+        {navApp !== 'app' && destLat && destLng && (
+          <button
+            onClick={handleOpenNav}
+            className="gradient-primary rounded-[16px] shadow-button py-3 flex items-center justify-center gap-2 mb-3"
+          >
+            <Navigation size={18} className="text-white" />
+            <span className="text-sm font-bold text-white">
+              Navegar com {navApp === 'waze' ? 'Waze' : 'Google Maps'}
+            </span>
+          </button>
+        )}
 
         <div className="grid grid-cols-3 gap-3">
           <button className="bg-card rounded-[16px] shadow-card py-4 flex flex-col items-center justify-center gap-1.5">
