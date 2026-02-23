@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { ChevronLeft, Package, Phone, CheckCircle, XCircle, Loader2, Navigation } from "lucide-react";
+import { ChevronLeft, Package, Phone, CheckCircle, XCircle, Loader2 } from "lucide-react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { ImportedData } from "@/pages/Index";
 import { getPreferredNavApp, openExternalNavigation } from "@/lib/external-navigation";
+import iconGoogleMaps from "@/assets/icon-google-maps.png";
+import iconWaze from "@/assets/icon-waze.png";
 
 // Mapbox public token
 mapboxgl.accessToken = "pk.eyJ1IjoicGFpdmEwMDciLCJhIjoiY21pYm4yOHphMDNocTJqb2w5OTlhZWk5bCJ9.nYQcx0AWey8p5P2R1mWJQQ";
@@ -163,7 +165,11 @@ const ActiveRoute = ({ onNavigate, importedData }: ActiveRouteProps) => {
             onClick={handleOpenNav}
             className="gradient-primary rounded-[16px] shadow-button py-3 flex items-center justify-center gap-2 mb-3"
           >
-            <Navigation size={18} className="text-white" />
+            <img
+              src={navApp === 'waze' ? iconWaze : iconGoogleMaps}
+              alt={navApp === 'waze' ? 'Waze' : 'Google Maps'}
+              className="w-5 h-5 object-contain rounded"
+            />
             <span className="text-sm font-bold text-white">
               Navegar com {navApp === 'waze' ? 'Waze' : 'Google Maps'}
             </span>

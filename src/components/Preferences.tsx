@@ -1,6 +1,9 @@
 import React from 'react';
-import { ArrowLeft, Navigation, MapPin, ChevronRight, Check } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { ArrowLeft, Navigation, Check } from 'lucide-react';
+import { useState } from 'react';
+import iconGoogleMaps from '@/assets/icon-google-maps.png';
+import iconWaze from '@/assets/icon-waze.png';
+import iconApp from '@/assets/rotasmart-logo.png';
 
 interface PreferencesProps {
   onNavigate: (screen: string) => void;
@@ -11,19 +14,19 @@ const NAV_OPTIONS = [
     id: 'app',
     label: 'Mapa do Aplicativo',
     description: 'Navegação integrada no RotaSmart',
-    icon: '🗺️',
+    image: iconApp,
   },
   {
     id: 'google_maps',
     label: 'Google Maps',
     description: 'Abrir rotas no Google Maps',
-    icon: '📍',
+    image: iconGoogleMaps,
   },
   {
     id: 'waze',
     label: 'Waze',
     description: 'Abrir rotas no Waze',
-    icon: '🚗',
+    image: iconWaze,
   },
 ] as const;
 
@@ -76,8 +79,8 @@ const Preferences = ({ onNavigate }: PreferencesProps) => {
               }`}
             >
               <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-lg">
-                  {option.icon}
+                <div className="w-10 h-10 rounded-xl bg-gray-50 flex items-center justify-center overflow-hidden">
+                  <img src={option.image} alt={option.label} className="w-7 h-7 object-contain" />
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-bold text-gray-900">{option.label}</p>
