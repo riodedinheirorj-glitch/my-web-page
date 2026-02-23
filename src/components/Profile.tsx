@@ -41,7 +41,7 @@ const Profile = ({ onNavigate }: ProfileProps) => {
   ];
 
   return (
-    <div className="flex flex-col h-full bg-[#F4F6F9] px-5 pb-8">
+    <div className="flex flex-col min-h-full bg-[#F4F6F9] px-4 sm:px-5 pb-8 overflow-y-auto" style={{ scrollbarWidth: "none" }}>
       {/* Header / User Info */}
       <div className="pt-8 pb-6 flex flex-col items-center">
         <div className="relative mb-4">
